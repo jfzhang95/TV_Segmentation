@@ -18,7 +18,7 @@ class GraphMaker:
         self.seed_overlay = None
         self.segment_overlay = None
         self.mask = None
-        self.load_image('cup1.jpg')
+        self.load_image('images/cup1.jpg')
         self.background_seeds = []
         self.foreground_seeds = []
         self.background_average = np.array(3)
