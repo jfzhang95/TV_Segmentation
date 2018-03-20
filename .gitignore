@@ -5,6 +5,8 @@ __pycache__/
 
 images/*
 .idea
+GraphMaker_Test.py
+
 # C extensions
 *.so
 

@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 from PyQt4.QtCore import pyqtSlot, Qt
 from PyQt4.QtGui import *
-import GraphMaker as GraphMaker
+import GraphMaker_Test as GraphMaker
 
 class NewCutUI:
 
