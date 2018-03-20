@@ -29,20 +29,6 @@ f2 = np.sqrt(d2[:, :, 0] ** 2 + d2[:, :, 1] ** 2 + d2[:, :, 2] ** 2)
 
 f = f1 - f2
 
-u = np.ones((m, n)) * 0.1
-v = np.zeros((m, n))
-c = np.ones((m, n))
-
-f_flat = np.reshape(f, (1, m*n))
-u_flat = np.reshape(f, (1, m*n))
-c_uv_flat = np.reshape(c*(u-v), (1, m*n))
-uv_flat = np.reshape((u-v), (1, m*n))
-
-result = np.dot(f_flat, u_flat.T) + np.dot(uv_flat, c_uv_flat.T)
-print(result)
-
-
-
 tau = 0.1
 sigma = 0.05
 mu = 1000

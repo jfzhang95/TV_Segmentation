@@ -5,8 +5,9 @@ __pycache__/
 
 images/*
 .idea
-GraphMaker_RGB.py
 GraphMaker_LAB.py
+GraphMaker_RGB.py
+
 
 # C extensions
 *.so

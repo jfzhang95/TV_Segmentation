@@ -185,6 +185,7 @@ class GraphMaker:
             if self.superpixel_segment[coordinate[1] - 1, coordinate[0] - 1] not in self.background_superseeds:
                 self.background_superseeds.append(self.superpixel_segment[coordinate[1] - 1, coordinate[0] - 1])
 
+
         cost_func = lambda u, v, e, prev_e: e['cost']
 
         #######For RGB foreground#######
@@ -243,6 +244,15 @@ class GraphMaker:
             # 150 is a threshold(hyper-parameters), which need to be chosen carefully!
             if RGB_disFore[boundary] > 150 and boundary not in self.background_superseeds:
                 self.background_superseeds.append(boundary)
+
+        tmp_img = self.image.copy()
+        for x in range(0, self.height):
+            for y in range(0, self.width):
+                if self.superpixel_segment[x, y] in self.background_superseeds:
+                    tmp_img[x, y] = (0, 0, 255)
+                if self.superpixel_segment[x, y] in self.foreground_superseeds:
+                    tmp_img[x, y] = (0, 255, 0)
+        cv2.imwrite("./results/backseeds.jpg", tmp_img)
 
         for v in self.background_superseeds:
             G_RGB.add_edge(v, 't', {'cost': 0})

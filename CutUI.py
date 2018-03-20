@@ -1,7 +1,7 @@
 import sys
 import cv2
 import numpy as np
-from PyQt4.QtCore import pyqtSlot, Qt
+from PyQt4.QtCore import pyqtSlot
 from PyQt4.QtGui import *
 import GraphMaker as GraphMaker
 
