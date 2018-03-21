@@ -108,10 +108,10 @@ class GraphMaker:
         starttime = datetime.datetime.now()
         self.superpixel_segment = self.get_superpixel()
         endtime = datetime.datetime.now()
-        print("get superpixel: " + str((endtime - starttime).seconds))
+        print("Get superpixel: " + str((endtime - starttime).seconds))
         # init super-pixel
         self.n_seg = np.amax(self.superpixel_segment) + 1  # the number of super-pixels
-        print("the number of superpixel:", self.n_seg)
+        print("The number of superpixel:", self.n_seg)
         self.num_seg = np.zeros(self.n_seg, dtype=int)  # count for each super-pixel
 
         # Go through all pixels in image
@@ -140,7 +140,7 @@ class GraphMaker:
                                 self.super_edge[self.superpixel_segment[x, y]].append(
                                     self.superpixel_segment[x + i, y + j])
         endtime = datetime.datetime.now()
-        print("compute each edge: " + str((endtime - starttime).seconds))
+        print("Compute each edge: " + str((endtime - starttime).seconds))
 
         ########check edge on superpixels#########
         # temp_img = self.superpixel_image.copy()
@@ -173,7 +173,7 @@ class GraphMaker:
         for i in range(0, self.n_seg):
             self.ave_RGB[i] /= self.num_seg[i]
         endtime = datetime.datetime.now()
-        print("get superpixel value for each cue: " + str((endtime - starttime).seconds))
+        print("Get superpixel value: " + str((endtime - starttime).seconds))
 
 
     # @jit
@@ -224,7 +224,7 @@ class GraphMaker:
             RGB_disFore[v] = info.total_cost
 
         endtime = datetime.datetime.now()
-        print("compute RGB disfore: " + str((endtime - starttime).seconds))
+        print("Compute RGB disfore: " + str((endtime - starttime).seconds))
 
         #######get background_seed#######
         #######NEED TO BE IMPROVED#######
@@ -267,7 +267,7 @@ class GraphMaker:
             RGB_disBack[v] = info.total_cost
 
         endtime = datetime.datetime.now()
-        print("compute RGB disback: " + str((endtime - starttime).seconds))
+        print("Compute RGB disback: " + str((endtime - starttime).seconds))
 
         self.cfd_RGB = np.zeros(self.n_seg, dtype=float)
 
