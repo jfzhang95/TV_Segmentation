@@ -20,7 +20,7 @@ class GraphMaker:
         self.seed_overlay = None
         self.segment_overlay = None
         self.mask = None
-        self.load_image('images/cup1.jpg')
+        self.load_image('images/rgb.jpg')
         self.background_seeds = []
         self.foreground_seeds = []
         self.background_average = np.array(3)
@@ -92,12 +92,12 @@ class GraphMaker:
         for i, coordinate in enumerate(self.background_seeds):
             background_points[i, :] = self.image[coordinate[1], coordinate[0]]
 
-        clf1 = KMeans(n_clusters=15)
+        clf1 = KMeans(n_clusters=400)
         clf1.fit(foreground_points)
         self.f_c = clf1.cluster_centers_
 
 
-        clf2 = KMeans(n_clusters=10)
+        clf2 = KMeans(n_clusters=400)
         clf2.fit(background_points)
         self.b_c = clf2.cluster_centers_
 
@@ -124,11 +124,11 @@ class GraphMaker:
         f = d_f - d_b
         tau = 0.1
         sigma = 0.05
-        mu = 1000
+        mu = 1
 
         imgray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
 
-        u = primal_dual(imgray, sigma, tau, mu, f, iters=10)
+        u = primal_dual(imgray, sigma, tau, mu, f, iters=200)
         u[u > 0.5] = 1
         u[u <= 0.5] = 0
 

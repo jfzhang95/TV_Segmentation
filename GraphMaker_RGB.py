@@ -314,7 +314,7 @@ class GraphMaker:
         indices = np.where(u == 1)
         foreground_nodes_num = np.shape(indices)[1]
         for index in range(foreground_nodes_num):
-            self.segment_overlay[indices[0][index], indices[1][index]] = (255, 0, 255)
+            self.segment_overlay[indices[0][index], indices[1][index]] = (255, 255, 255)
             self.mask[indices[0][index], indices[1][index]] = (True, True, True)
 
 

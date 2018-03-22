@@ -30,7 +30,7 @@ class GraphMaker:
         self.seed_overlay = None
         self.segment_overlay = None
 
-        self.load_image('images/rgb.jpg')
+        self.load_image('images/jy2.jpg')
 
         self.background_seeds = []
         self.foreground_seeds = []
@@ -104,6 +104,8 @@ class GraphMaker:
 
 
     def getSuperpixel(self):
+        print(self.foreground_seeds)
+        print(self.background_seeds)
         starttime = datetime.datetime.now()
         self.superpixel_segment = self.get_superpixel()
         endtime = datetime.datetime.now()
@@ -142,22 +144,22 @@ class GraphMaker:
         print("Compute each edge: " + str((endtime - starttime).seconds))
 
         #######check edge on superpixels#########
-        # temp_img = self.superpixel_image.copy()
-        # ave_cor = [[0, 0] for i in range(0, self.n_seg)]
-        # for x in range(0, self.height):
-        #     for y in range(0, self.width):
-        #         ave_cor[self.superpixel_segment[x, y]][0] += x
-        #         ave_cor[self.superpixel_segment[x, y]][1] += y
-        # for i in range(0, self.n_seg):
-        #     ave_cor[i] /= self.num_seg[i]
-        # for i in range(0, self.n_seg):
-        #     for j in self.super_edge[i]:
-        #         if j < i:
-        #             continue
-        #         cv2.line(temp_img, (int(ave_cor[i][1]), int(ave_cor[i][0])), (int(ave_cor[j][1]), int(ave_cor[j][0])),
-        #                  (0, 0, 255), 1)
-        # temp_img = temp_img.astype('uint8')
-        # cv2.imwrite("./results/EdgeImg.jpg", temp_img)
+        temp_img = self.superpixel_image.copy()
+        ave_cor = [[0, 0] for i in range(0, self.n_seg)]
+        for x in range(0, self.height):
+            for y in range(0, self.width):
+                ave_cor[self.superpixel_segment[x, y]][0] += x
+                ave_cor[self.superpixel_segment[x, y]][1] += y
+        for i in range(0, self.n_seg):
+            ave_cor[i] /= self.num_seg[i]
+        for i in range(0, self.n_seg):
+            for j in self.super_edge[i]:
+                if j < i:
+                    continue
+                cv2.line(temp_img, (int(ave_cor[i][1]), int(ave_cor[i][0])), (int(ave_cor[j][1]), int(ave_cor[j][0])),
+                         (0, 0, 255), 1)
+        temp_img = temp_img.astype('uint8')
+        cv2.imwrite("./results/EdgeImg.jpg", temp_img)
 
     def getSuperpixelValue(self):
 
@@ -313,12 +315,12 @@ class GraphMaker:
         indices = np.where(u == 1)
         foreground_nodes_num = np.shape(indices)[1]
         for index in range(foreground_nodes_num):
-            self.segment_overlay[indices[0][index], indices[1][index]] = (255, 0, 255)
+            self.segment_overlay[indices[0][index], indices[1][index]] = (255, 255, 255)
             self.mask[indices[0][index], indices[1][index]] = (True, True, True)
 
     # SLIC SuperPixel
     def get_superpixel(self):
-        segments = slic(self.image, n_segments=1500, compactness=10, convert2lab=True)
+        segments = slic(self.image, n_segments=3000, compactness=10, convert2lab=True, enforce_connectivity=False)
         self.superpixel_image = img_as_ubyte(mark_boundaries(self.image, segments))
         return segments
 

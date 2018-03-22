@@ -18,7 +18,7 @@ class GraphMaker:
         self.seed_overlay = None
         self.segment_overlay = None
         self.mask = None
-        self.load_image('images/rgb.jpg')
+        self.load_image('images/jy2.jpg')
         self.background_seeds = []
         self.foreground_seeds = []
         self.background_average = np.array(3)
@@ -115,11 +115,11 @@ class GraphMaker:
         f = f1 - f2
         tau = 0.1
         sigma = 0.05
-        mu = 1000
+        mu = 1
 
         imgray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
 
-        u = primal_dual(imgray, sigma, tau, mu, f, iters=10)
+        u = primal_dual(imgray, sigma, tau, mu, f, iters=500)
         u[u > 0.5] = 1
         u[u <= 0.5] = 0
 
