@@ -39,8 +39,8 @@ def primal_dual(img, sigma, tau, mu, f, iters=10):
     for i in range(iters):
         print(i)
         ubar_old = -u
-        p1 = p + sigma * dxp(ubar)
-        p2 = p + sigma * dyp(ubar)
+        p1 = p - sigma * dxp(ubar)
+        p2 = p - sigma * dyp(ubar)
         norm = np.maximum(np.ones((M, N)), np.sqrt(p1 ** 2 + p2 ** 2))
         p1 = p1 / norm
         p2 = p2 / norm

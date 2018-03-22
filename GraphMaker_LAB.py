@@ -20,14 +20,7 @@ class GraphMaker:
 
     default = 0.5
     MAXIMUM = 1000000000
-
-
     ns = 1
-    ###各种参数###
-    lamda = 0.1
-    sigma1 = 0.5
-    sigma2 = 4000
-    sigma3 = 15
 
     def __init__(self):
         self.depth = None
@@ -247,7 +240,7 @@ class GraphMaker:
                 boundary_superpixel.append(self.superpixel_segment[self.height - 1, y])
         for boundary in boundary_superpixel:
             # 100 is a threshold(hyper-parameters), which need to be chosen carefully!
-            if Lab_disFore[boundary] > 100 and boundary not in self.background_superseeds:
+            if Lab_disFore[boundary] / np.max(Lab_disFore) > 0.3 and boundary not in self.background_superseeds:
                 self.background_superseeds.append(boundary)
 
         tmp_img = self.image.copy()
@@ -295,13 +288,14 @@ class GraphMaker:
 
 
     def cut_graph(self):
+        # self.f = self.f * (np.ones((self.height, self.width)) + np.random.normal(0, 0.01, (self.height, self.width)))
         tau = 0.1
         sigma = 0.05
-        mu = 10000
+        mu = 1
 
         imgray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
 
-        u = primal_dual(imgray, sigma, tau, mu, self.f, iters=50)
+        u = primal_dual(imgray, sigma, tau, mu, self.f, iters=500)
         u[u > 0.5] = 1
         u[u <= 0.5] = 0
 

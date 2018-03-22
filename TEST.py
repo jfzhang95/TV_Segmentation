@@ -239,7 +239,7 @@ class GraphMaker:
                 boundary_superpixel.append(self.superpixel_segment[self.height - 1, y])
         for boundary in boundary_superpixel:
             # 150 is a threshold(hyper-parameters), which need to be chosen carefully!
-            if RGB_disFore[boundary] / np.max(RGB_disFore) > 0.5 and boundary not in self.background_superseeds:
+            if RGB_disFore[boundary] > 150 and boundary not in self.background_superseeds:
                 self.background_superseeds.append(boundary)
 
         tmp_img = self.image.copy()
@@ -278,10 +278,6 @@ class GraphMaker:
         f[f <= 0] = 0
         f[f > 0] = 255
         cv2.imwrite('./results/SegImg.jpg', f)
-
-
-    # def construct_confident(self):
-    #     self.segment_overlay = np.zeros_like(self.segment_overlay)
 
 
     @staticmethod
