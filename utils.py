@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 def rgb2gray(rgb):
 
@@ -29,7 +29,7 @@ def dyp(u):
     dy = np.concatenate([u[1:, :], u[-1, :].reshape(1, -1)], axis=0) - u
     return dy
 
-def primal_dual(img, sigma, tau, mu, f, iters=10):
+def primal_dual(img, sigma, tau, mu, f, display=False, iters=10):
     M, N = np.shape(img)
 
     p = np.ones((M, N))
@@ -48,6 +48,16 @@ def primal_dual(img, sigma, tau, mu, f, iters=10):
         u = u - tau * (dxm(p1) + dym(p2) + (1 / mu) * f)
         u = np.minimum(np.ones((M, N)), np.maximum(np.zeros((M, N)), u))
         ubar = ubar_old + 2 * u
+        if display:
+            u_ = u.copy()
+            u_[u_ > 0.5] = 1
+            u_[u_ <= 0.5] = 0
+            plt.ion()
+            plt.imshow(u_.astype(int), cmap='gray')
+            plt.title('u')
+            plt.show()
+            plt.pause(0.1)
+            plt.clf()
 
     return u
 

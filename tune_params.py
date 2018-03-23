@@ -19,13 +19,13 @@ tau = 0.1
 sigma = 0.05
 mu = 1000
 
-u = primal_dual(imgray, sigma, tau, mu, f, iters=12)
-u[u>0.5] = 1
-u[u<=0.5] = 0
+u = primal_dual(imgray, sigma, tau, mu, f, display=True, iters=100)
+# u[u>0.5] = 1
+# u[u<=0.5] = 0
 
-u = np.array(u, dtype=np.int32)
-plt.imshow(u, cmap='gray')
-plt.show()
+# u = np.array(u, dtype=np.int32)
+# plt.imshow(u, cmap='gray')
+# plt.show()
 
 # # cv2.imshow('segmentation', u)
 # # cv2.waitKey(0)
