@@ -5,7 +5,7 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
-im = cv2.imread('images/cup1.jpg')
+im = cv2.imread('images/rgb.jpg')
 imgray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
 # im = mpimg.imread('images/cup1.jpg')
 # imgray = rgb2gray(im)
