@@ -46,6 +46,8 @@ def primal_dual(img, sigma, tau, mu, f, display=False, iters=10):
         p2 = p2 / norm
         p = p / norm
         u = u - tau * (dxm(p1) + dym(p2) + (1 / mu) * f)
+
+
         u = np.minimum(np.ones((M, N)), np.maximum(np.zeros((M, N)), u))
         ubar = ubar_old + 2 * u
         if display:
@@ -60,4 +62,66 @@ def primal_dual(img, sigma, tau, mu, f, display=False, iters=10):
             plt.clf()
 
     return u
+
+
+
+##########################################
+########### For ROF Problem ##############
+##########################################
+
+def nabla(I):
+    h, w = I.shape
+    G = np.zeros((h, w, 2), I.dtype)
+    G[:, :-1, 0] -= I[:, :-1]
+    G[:, :-1, 0] += I[:, 1:]
+    G[:-1, :, 1] -= I[:-1]
+    G[:-1, :, 1] += I[1:]
+    return G
+
+def nablaT(G):
+    h, w = G.shape[:2]
+    I = np.zeros((h, w), G.dtype)
+    # note that we just reversed left and right sides
+    # of each line to obtain the transposed operator
+    I[:, :-1] -= G[:, :-1, 0]
+    I[:, 1: ] += G[:, :-1, 0]
+    I[:-1]    -= G[:-1, :, 1]
+    I[1: ]    += G[:-1, :, 1]
+    return I
+
+def anorm(x):
+    '''Calculate L2 norm over the last array dimention'''
+    return np.sqrt((x*x).sum(-1))
+
+def project_nd(P, r):
+    '''perform a pixel-wise projection onto R-radius balls'''
+    nP = np.maximum(1.0, anorm(P) / r)
+    return P / nP[..., np.newaxis]
+
+def shrink_1d(X, F, step):
+    '''pixel-wise scalar srinking'''
+    return X + np.clip(F - X, -step, step)
+
+def calc_energy_ROF(X, observation, clambda):
+    Ereg = anorm(nabla(X)).sum()
+    Edata = 0.5 * clambda * ((X - observation)**2).sum()
+    return Ereg + Edata
+
+def solve_ROF(img, clambda=4.0, iter_n=101):
+    # setting step sizes and other params
+    # L2 = 8.0
+    tau = 0.1
+    sigma = 0.05
+    theta = 1.0
+
+    X = img.copy()
+    P = nabla(X)
+    for i in range(iter_n):
+        P = project_nd( P + sigma*nabla(X), 1.0 )
+        lt = clambda * tau
+        X1 = (X - tau * nablaT(P) + lt * img) / (1.0 + lt)
+        X = X1 + theta * (X1 - X)
+        # if i % 10 == 0:
+        #     print("%.2f" % calc_energy_ROF(X, img, clambda),)
+    return X
 

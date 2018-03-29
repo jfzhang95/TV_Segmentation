@@ -30,7 +30,7 @@ class GraphMaker:
         self.seed_overlay = None
         self.segment_overlay = None
 
-        self.load_image('images/jy2.jpg')
+        self.load_image('images/woman.jpg')
 
         self.background_seeds = []
         self.foreground_seeds = []
@@ -297,7 +297,7 @@ class GraphMaker:
 
         imgray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
 
-        u = primal_dual(imgray, sigma, tau, mu, self.f, iters=500)
+        u = primal_dual(imgray, sigma, tau, mu, self.f, iters=100)
         u[u > 0.5] = 1
         u[u <= 0.5] = 0
 
@@ -320,7 +320,7 @@ class GraphMaker:
 
     # SLIC SuperPixel
     def get_superpixel(self):
-        segments = slic(self.image, n_segments=3000, compactness=10, convert2lab=True, enforce_connectivity=False)
+        segments = slic(self.image, n_segments=1600, compactness=10, convert2lab=True, enforce_connectivity=False)
         self.superpixel_image = img_as_ubyte(mark_boundaries(self.image, segments))
         return segments
 
