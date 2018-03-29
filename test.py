@@ -5,8 +5,8 @@ from utils import *
 f = np.load('f.npy')
 img = cv2.imread('images/rgb.jpg')
 imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-u = np.ones((np.shape(imgray))) * 0.5
-v = np.ones((np.shape(imgray))) * 0.5
+u = np.ones((np.shape(imgray))) * 0
+v = np.ones((np.shape(imgray))) * 0
 
 f_flat = f.reshape(-1, 1)
 u_flat = u.reshape(-1, 1)
@@ -22,22 +22,26 @@ threhold = 0.5
 for i in range(MAX_ITERS):
     print(i)
     # Optimization 1
-    for j in range(10):
+    for j in range(20):
         gradient = f_flat + 2 * theta *(u_flat - v_flat)
         u_flat -= learning_rate * gradient
         u_flat = np.clip(u_flat, 0, 1)
     u = u_flat.copy().reshape((np.shape(imgray)))
-    u[u > threhold] = 1
-    u[u <= threhold] = 0
+
 
     # Optimization 2
     v = solve_ROF(u, iter_n=20)
     v_flat = v.copy().reshape(-1, 1)
     v[v > threhold] = 1
     v[v <= threhold] = 0
+    u[u > threhold] = 1
+    u[u <= threhold] = 0
 
+    f_flat[v.reshape(-1, 1) == 1] = -np.abs(f_flat[v.reshape(-1, 1) == 1] - 255)
+    ### mode 1 ###
+    f_flat[v.reshape(-1, 1) == 0] = np.abs(f_flat[v.reshape(-1, 1) == 0] + 255)
 
-    theta *= 5
+    theta *= 10
 
     plt.ion()
     plt.subplot(221)

@@ -109,9 +109,9 @@ def calc_energy_ROF(X, observation, clambda):
 
 def solve_ROF(img, clambda=4.0, iter_n=101):
     # setting step sizes and other params
-    # L2 = 8.0
-    tau = 0.1
-    sigma = 0.05
+    L2 = 8.0
+    tau = 0.02
+    sigma = 1.0 / (L2*tau)
     theta = 1.0
 
     X = img.copy()
