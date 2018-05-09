@@ -30,7 +30,7 @@ class GraphMaker:
         self.seed_overlay = None
         self.segment_overlay = None
 
-        self.load_image('images/woman.jpg')
+        self.load_image('images/jy2.jpg')
 
         self.background_seeds = []
         self.foreground_seeds = []

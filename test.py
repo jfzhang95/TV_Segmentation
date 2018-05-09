@@ -23,23 +23,23 @@ for i in range(MAX_ITERS):
     print(i)
     # Optimization 1
     for j in range(20):
-        gradient = f_flat + 2 * theta *(u_flat - v_flat)
+        gradient = f_flat + 2 * theta * (u_flat - v_flat)
         u_flat -= learning_rate * gradient
         u_flat = np.clip(u_flat, 0, 1)
     u = u_flat.copy().reshape((np.shape(imgray)))
 
 
     # Optimization 2
-    v = solve_ROF(u, iter_n=20)
+    v = solve_ROF(u, theta, iter_n=20)
     v_flat = v.copy().reshape(-1, 1)
     v[v > threhold] = 1
     v[v <= threhold] = 0
     u[u > threhold] = 1
     u[u <= threhold] = 0
 
-    f_flat[v.reshape(-1, 1) == 1] = -np.abs(f_flat[v.reshape(-1, 1) == 1] - 255)
+    # f_flat[v.reshape(-1, 1) == 1] = -np.abs(f_flat[v.reshape(-1, 1) == 1] - 255)
     ### mode 1 ###
-    f_flat[v.reshape(-1, 1) == 0] = np.abs(f_flat[v.reshape(-1, 1) == 0] + 255)
+    # f_flat[v.reshape(-1, 1) == 0] = np.abs(f_flat[v.reshape(-1, 1) == 0] + 255)
 
     theta *= 10
 
