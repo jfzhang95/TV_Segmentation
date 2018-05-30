@@ -4,7 +4,8 @@ __pycache__/
 *$py.class
 
 images/*
-.idea
+.idea/
+backbone/*
 
 
 # C extensions

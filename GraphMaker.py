@@ -18,7 +18,7 @@ class GraphMaker:
         self.seed_overlay = None
         self.segment_overlay = None
         self.mask = None
-        self.load_image('images/rgb.jpg')
+        self.load_image('images/cup1.jpg')
         self.background_seeds = []
         self.foreground_seeds = []
         self.background_average = np.array(3)
@@ -62,8 +62,6 @@ class GraphMaker:
 
     def get_image_with_overlay(self, overlayNumber):
         if overlayNumber == self.seeds:
-            # addWeighted--将两张图片叠加 0.9是图1的叠加比例，0.4是图二的叠加比例， 0.1是bias
-            # dst = src1*alpha + src2*beta + gamma
             return cv2.addWeighted(self.image, 0.9, self.seed_overlay, 0.4, 0.1)
         else:
             return cv2.addWeighted(self.image, 0.9, self.segment_overlay, 0.9, 0.1)

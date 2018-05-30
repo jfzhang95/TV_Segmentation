@@ -63,8 +63,6 @@ def primal_dual(img, sigma, tau, mu, f, display=False, iters=10):
 
     return u
 
-
-
 ##########################################
 ########### For ROF Problem ##############
 ##########################################
