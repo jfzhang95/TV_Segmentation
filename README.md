@@ -1,6 +1,6 @@
 # TV_Segmentation
 
-This is an implement of binary image segmentation based on total variation. For algorithm details, please see in [here](https://github.com/jfzhang95/TV_Segmentation/blob/master/notes.pdf).
+This is an implement of ```binary image segmentation based on total variation```. For algorithm details, please see in [here](https://github.com/jfzhang95/TV_Segmentation/blob/master/notes.pdf).
 
 ### Dependencies
 ```
@@ -30,7 +30,9 @@ To use this code, please do:
     ```
 
 If installed correctly, the result should look like this:
-![results](doc/results.png)
+![results](doc/result.png)
+
+The primal dual total variation optimization method is implemented in [utils.py](https://github.com/jfzhang95/TV_Segmentation/blob/master/utils.py)
 
 ### License
 [MIT](https://github.com/jfzhang95/TV_Segmentation/blob/master/LICENSE)
