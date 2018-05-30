@@ -1,6 +1,6 @@
 # TV_Segmentation
 
-This is an implement of ```binary image segmentation based on total variation```. For algorithm details, please see in [here](https://github.com/jfzhang95/TV_Segmentation/blob/master/notes.pdf).
+This is an implement of ```binary image segmentation based on total variation```. For more details in algorithm, please see in [here](https://github.com/jfzhang95/TV_Segmentation/blob/master/notes.pdf).
 
 ### Dependencies
 ```
