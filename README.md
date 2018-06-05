@@ -16,7 +16,7 @@ To use this code, please do:
 
 0. Clone the repo:
     ```Shell
-    git https://github.com/jfzhang95/TV_Segmentation
+    git clone https://github.com/jfzhang95/TV_Segmentation
     cd TV_Segmentation
     ```
 1. Install dependencies:
